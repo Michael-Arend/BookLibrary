@@ -23,6 +23,7 @@ const BooksApp = () => {
 
   const HandleShelfChanged = (book, newShellValue) => {
     const bookIndex = books.findIndex((b) => b.id === book.id);
+    const prevBooks = { ...books };
     let newBooks = [...books];
     if (bookIndex === -1) {
       book.shelf = newShellValue;
@@ -30,8 +31,13 @@ const BooksApp = () => {
     } else {
       newBooks[bookIndex] = { ...newBooks[bookIndex], shelf: newShellValue };
     }
-
     setBooks((prev) => newBooks);
+    BooksAPI.update(book, newShellValue).catch((err) => {
+      if (err !== undefined) {
+        setBooks(prevBooks);
+        console.log("an error has occured while updating the book shelf.");
+      }
+    });
   };
 
   return (
