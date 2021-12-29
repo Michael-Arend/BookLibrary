@@ -13,8 +13,6 @@ const bookshelfs = [
 ];
 
 const BooksApp = () => {
-  const showSearchPage = false;
-
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
